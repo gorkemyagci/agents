@@ -1,5 +1,3 @@
-// Token estimation
-
 // Conversation compaction
 export { compactConversation } from "./compaction.ts";
 
@@ -10,6 +8,8 @@ export {
   getModelLimits,
   isOverThreshold,
 } from "./model-limits.ts";
+
+// Token estimation
 export {
   estimateMessagesTokens,
   estimateTokens,
