@@ -40,9 +40,13 @@ export function toolCallResponse(
 
 /**
  * Mock model that returns one scripted stream per call, in order.
- * Records the options of every call in `calls`.
+ * Records the options of every call in `calls`. Non-streaming calls
+ * (used for compaction) return `summary` as text.
  */
-export function scriptedModel(responses: LanguageModelV2StreamPart[][]) {
+export function scriptedModel(
+  responses: LanguageModelV2StreamPart[][],
+  summary?: string,
+) {
   const calls: DoStreamOptions[] = [];
   const model: LanguageModelV2 & { calls: DoStreamOptions[] } = {
     specificationVersion: "v2",
@@ -51,7 +55,13 @@ export function scriptedModel(responses: LanguageModelV2StreamPart[][]) {
     supportedUrls: {},
     calls,
     doGenerate: async () => {
-      throw new Error("doGenerate is not scripted");
+      if (summary === undefined) throw new Error("doGenerate is not scripted");
+      return {
+        content: [{ type: "text", text: summary }],
+        finishReason: "stop",
+        usage,
+        warnings: [],
+      };
     },
     doStream: async (options) => {
       calls.push(options);

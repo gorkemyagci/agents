@@ -43,7 +43,12 @@ export async function runAgent(
 
   const precheckTokens = estimateMessagesTokens(messages);
   if (isOverThreshold(precheckTokens.total, modelLimits.contextWindow)) {
-    messages = await compactConversation(workingHistory, MODEL_NAME);
+    const summary = await compactConversation(workingHistory, MODEL_NAME);
+    messages = [
+      { role: "system", content: SYSTEM_PROMPT },
+      ...summary,
+      { role: "user", content: userMessage },
+    ];
   }
 
   let fullResponse = "";

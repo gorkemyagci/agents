@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import type { LanguageModel } from "ai";
+import type { LanguageModel, ModelMessage } from "ai";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { AgentCallbacks } from "../src/types.ts";
 import { scriptedModel, textResponse, toolCallResponse } from "./helpers.ts";
@@ -91,5 +91,22 @@ describe("runAgent", () => {
     expect(cb.onToolCallEnd).not.toHaveBeenCalled();
     expect(cb.onComplete).toHaveBeenCalledWith("");
     expect(model.calls).toHaveLength(1);
+  });
+
+  it("keeps the system prompt and the new user message after compaction", async () => {
+    const model = scriptedModel([textResponse("Answer")], "SUMMARY");
+    mocks.model = model;
+    // Large enough to cross the 80% threshold of the 400k-token window
+    const history: ModelMessage[] = [
+      { role: "user", content: "x".repeat(1_300_000) },
+      { role: "assistant", content: "ok" },
+    ];
+
+    await runAgent("next question", history, callbacks());
+
+    const prompt = model.calls[0].prompt;
+    expect(prompt[0].role).toBe("system");
+    expect(JSON.stringify(prompt)).toContain("SUMMARY");
+    expect(JSON.stringify(prompt.at(-1))).toContain("next question");
   });
 });
