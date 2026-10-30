@@ -1,5 +1,5 @@
-import React, { useState } from "react";
 import { Box, Text, useInput } from "ink";
+import React, { useState } from "react";
 
 interface ToolApprovalProps {
   toolName: string;
@@ -29,7 +29,14 @@ function getArgsSummary(args: unknown): string {
 
   const obj = args as Record<string, unknown>;
   // Try to find a meaningful key to show inline
-  const meaningfulKeys = ["path", "filePath", "command", "query", "code", "content"];
+  const meaningfulKeys = [
+    "path",
+    "filePath",
+    "command",
+    "query",
+    "code",
+    "content",
+  ];
   for (const key of meaningfulKeys) {
     if (key in obj && typeof obj[key] === "string") {
       const value = obj[key] as string;
@@ -69,7 +76,7 @@ export function ToolApproval({ toolName, args, onResolve }: ToolApprovalProps) {
         onResolve(selectedIndex === 0);
       }
     },
-    { isActive: true }
+    { isActive: true },
   );
 
   const argsSummary = getArgsSummary(args);
@@ -82,10 +89,10 @@ export function ToolApproval({ toolName, args, onResolve }: ToolApprovalProps) {
       </Text>
       <Box marginLeft={2} flexDirection="column">
         <Text>
-          <Text color="cyan" bold>{toolName}</Text>
-          {argsSummary && (
-            <Text dimColor>({argsSummary})</Text>
-          )}
+          <Text color="cyan" bold>
+            {toolName}
+          </Text>
+          {argsSummary && <Text dimColor>({argsSummary})</Text>}
         </Text>
         <Box marginLeft={2} flexDirection="column">
           <Text dimColor>{preview}</Text>

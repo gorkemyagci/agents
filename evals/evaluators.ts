@@ -1,21 +1,20 @@
+import { openai } from "@ai-sdk/openai";
 import {
   generateObject,
   generateText,
-  stepCountIs,
   type ModelMessage,
+  stepCountIs,
 } from "ai";
-import { openai } from "@ai-sdk/openai";
 import { z } from "zod";
-
+import { SYSTEM_PROMPT } from "../src/agent/system/prompt.ts";
 import type {
   EvalTarget,
-  SingleTurnResult,
-  MultiTurnTarget,
-  MultiTurnResult,
   MultiTurnEvalData,
+  MultiTurnResult,
+  MultiTurnTarget,
+  SingleTurnResult,
 } from "./types.ts";
 import { buildMockedTools } from "./utils.ts";
-import { SYSTEM_PROMPT } from "../src/agent/system/prompt.ts";
 
 const judgeSchema = z.object({
   score: z

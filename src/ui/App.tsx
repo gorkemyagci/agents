@@ -1,14 +1,14 @@
-import React, { useState, useCallback } from "react";
-import { Box, Text, useApp } from "ink";
 import type { ModelMessage } from "ai";
+import { Box, Text, useApp } from "ink";
+import React, { useCallback, useState } from "react";
 import { runAgent } from "../agent/run.ts";
-import { MessageList, type Message } from "./components/MessageList.tsx";
-import { ToolCall, type ToolCallProps } from "./components/ToolCall.tsx";
-import { Spinner } from "./components/Spinner.tsx";
+import type { TokenUsageInfo, ToolApprovalRequest } from "../types.ts";
 import { Input } from "./components/Input.tsx";
-import { ToolApproval } from "./components/ToolApproval.tsx";
+import { type Message, MessageList } from "./components/MessageList.tsx";
+import { Spinner } from "./components/Spinner.tsx";
 import { TokenUsage } from "./components/TokenUsage.tsx";
-import type { ToolApprovalRequest, TokenUsageInfo } from "../types.ts";
+import { ToolApproval } from "./components/ToolApproval.tsx";
+import { ToolCall, type ToolCallProps } from "./components/ToolCall.tsx";
 
 interface ActiveToolCall extends ToolCallProps {
   id: string;
@@ -140,11 +140,14 @@ export function App() {
           </Box>
         )}
 
-        {isLoading && !streamingText && activeToolCalls.length === 0 && !pendingApproval && (
-          <Box marginTop={1}>
-            <Spinner />
-          </Box>
-        )}
+        {isLoading &&
+          !streamingText &&
+          activeToolCalls.length === 0 &&
+          !pendingApproval && (
+            <Box marginTop={1}>
+              <Spinner />
+            </Box>
+          )}
 
         {pendingApproval && (
           <ToolApproval

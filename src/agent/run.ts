@@ -1,21 +1,19 @@
-import { streamText, type ModelMessage } from "ai";
 import { openai } from "@ai-sdk/openai";
-import { getTracer } from "@lmnr-ai/lmnr";
-import { tools } from "./tools/index.ts";
-import { executeTool } from "./executeTool.ts";
-import { SYSTEM_PROMPT } from "./system/prompt.ts";
-import { Laminar } from "@lmnr-ai/lmnr";
+import { getTracer, Laminar } from "@lmnr-ai/lmnr";
+import { type ModelMessage, streamText } from "ai";
 import type { AgentCallbacks, ToolCallInfo } from "../types.ts";
 import {
-  estimateMessagesTokens,
-  getModelLimits,
-  isOverThreshold,
   calculateUsagePercentage,
   compactConversation,
   DEFAULT_THRESHOLD,
+  estimateMessagesTokens,
+  getModelLimits,
+  isOverThreshold,
 } from "./context/index.ts";
-
+import { executeTool } from "./executeTool.ts";
 import { filterCompatibleMessages } from "./system/filterMessages.ts";
+import { SYSTEM_PROMPT } from "./system/prompt.ts";
+import { tools } from "./tools/index.ts";
 
 Laminar.initialize({
   projectApiKey: process.env.LMNR_API_KEY,

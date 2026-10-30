@@ -1,12 +1,12 @@
 import { evaluate } from "@lmnr-ai/lmnr";
-import {
-  toolsSelected,
-  toolsAvoided,
-  toolSelectionScore,
-} from "./evaluators.ts";
-import type { EvalData, EvalTarget } from "./types.ts";
 import dataset from "./data/file-tools.json" with { type: "json" };
+import {
+  toolSelectionScore,
+  toolsAvoided,
+  toolsSelected,
+} from "./evaluators.ts";
 import { singleTurnWithMocks } from "./executors.ts";
+import type { EvalData, EvalTarget } from "./types.ts";
 
 /**
  * File Tools Selection Evaluation

@@ -23,7 +23,13 @@ export const filterCompatibleMessages = (
       if (Array.isArray(content)) {
         const hasTextContent = content.some((part: unknown) => {
           if (typeof part === "string" && part.trim()) return true;
-          if (typeof part === "object" && part !== null && "type" in part && (part as { type: string }).type === "tool-call") return true;
+          if (
+            typeof part === "object" &&
+            part !== null &&
+            "type" in part &&
+            (part as { type: string }).type === "tool-call"
+          )
+            return true;
           if (typeof part === "object" && part !== null && "text" in part) {
             const textPart = part as { text?: string };
             return textPart.text && textPart.text.trim();

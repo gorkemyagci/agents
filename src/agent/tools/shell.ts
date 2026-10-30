@@ -1,6 +1,6 @@
 import { tool } from "ai";
-import { z } from "zod";
 import shell from "shelljs";
+import { z } from "zod";
 
 export const runCommand = tool({
   description: `Execute a shell or terminal command and return is's output. Use this for system operations, running scripts or interaction with the OS`,

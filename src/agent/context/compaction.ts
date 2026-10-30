@@ -1,5 +1,5 @@
-import { generateText, type ModelMessage } from "ai";
 import { openai } from "@ai-sdk/openai";
+import { generateText, type ModelMessage } from "ai";
 import { extractMessageText } from "./tokenEstimator.ts";
 
 const SUMMARIZATION_PROMPT = `You are a conversation summarizer. Your task is to create a concise summary of the conversation so far that preserves:
@@ -60,7 +60,8 @@ export async function compactConversation(
     },
     {
       role: "assistant",
-      content: "I understand. I've reviewed the summary of our convo and I'm ready to continue. How can I help."
+      content:
+        "I understand. I've reviewed the summary of our convo and I'm ready to continue. How can I help.",
     },
   ];
 

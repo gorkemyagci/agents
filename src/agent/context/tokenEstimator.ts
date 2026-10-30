@@ -23,8 +23,13 @@ export function extractMessageText(message: ModelMessage): string {
       .map((part) => {
         if (typeof part === "string") return part;
         if ("text" in part && typeof part.text === "string") return part.text;
-        if ("value" in part && typeof part.value === "string") return part.value;
-        if ("output" in part && typeof part.output === "object" && part.output) {
+        if ("value" in part && typeof part.value === "string")
+          return part.value;
+        if (
+          "output" in part &&
+          typeof part.output === "object" &&
+          part.output
+        ) {
           const output = part.output as Record<string, unknown>;
           if ("value" in output && typeof output.value === "string") {
             return output.value;

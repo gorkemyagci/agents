@@ -1,11 +1,11 @@
-import React from 'react';
-import { Box, Text } from 'ink';
-import InkSpinner from 'ink-spinner';
+import { Box, Text } from "ink";
+import InkSpinner from "ink-spinner";
+import React from "react";
 
 export interface ToolCallProps {
   name: string;
   args?: unknown;
-  status: 'pending' | 'complete';
+  status: "pending" | "complete";
   result?: string;
 }
 
@@ -17,9 +17,9 @@ export function ToolCall({ name, status, result }: ToolCallProps) {
         <Text color="yellow" bold>
           {name}
         </Text>
-        {status === 'pending' ? (
+        {status === "pending" ? (
           <Text>
-            {' '}
+            {" "}
             <Text color="cyan">
               <InkSpinner type="dots" />
             </Text>
@@ -28,9 +28,12 @@ export function ToolCall({ name, status, result }: ToolCallProps) {
           <Text color="green"> ✓</Text>
         )}
       </Box>
-      {status === 'complete' && result && (
+      {status === "complete" && result && (
         <Box marginLeft={2}>
-          <Text dimColor>→ {result.slice(0, 100)}{result.length > 100 ? '...' : ''}</Text>
+          <Text dimColor>
+            → {result.slice(0, 100)}
+            {result.length > 100 ? "..." : ""}
+          </Text>
         </Box>
       )}
     </Box>

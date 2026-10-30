@@ -1,15 +1,20 @@
-import { generateText, stepCountIs, tool, type ModelMessage, type ToolSet } from "ai";
 import { openai } from "@ai-sdk/openai";
+import {
+  generateText,
+  type ModelMessage,
+  stepCountIs,
+  type ToolSet,
+  tool,
+} from "ai";
 import { z } from "zod";
-
+import { SYSTEM_PROMPT } from "../src/agent/system/prompt.ts";
 import type {
   EvalData,
-  SingleTurnResult,
   MultiTurnEvalData,
   MultiTurnResult,
+  SingleTurnResult,
 } from "./types.ts";
 import { buildMessages, buildMockedTools } from "./utils.ts";
-import { SYSTEM_PROMPT } from "../src/agent/system/prompt.ts";
 
 /**
  * Tool definitions for mocked single-turn evaluations.
@@ -102,7 +107,6 @@ export async function singleTurnWithMocks(
  * Multi-turn executor with mocked tools.
  * Runs a complete agent loop with tools returning fixed values.
  */
-
 
 export async function mutliTurnWithMocks(
   data: MultiTurnEvalData,

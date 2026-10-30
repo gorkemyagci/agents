@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Box, Text, useInput } from 'ink';
+import { Box, Text, useInput } from "ink";
+import React, { useState } from "react";
 
 interface InputProps {
   onSubmit: (value: string) => void;
@@ -7,7 +7,7 @@ interface InputProps {
 }
 
 export function Input({ onSubmit, disabled = false }: InputProps) {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState("");
 
   useInput((input, key) => {
     if (disabled) return;
@@ -15,7 +15,7 @@ export function Input({ onSubmit, disabled = false }: InputProps) {
     if (key.return) {
       if (value.trim()) {
         onSubmit(value);
-        setValue('');
+        setValue("");
       }
       return;
     }
@@ -33,7 +33,7 @@ export function Input({ onSubmit, disabled = false }: InputProps) {
   return (
     <Box>
       <Text color="blue" bold>
-        {'> '}
+        {"> "}
       </Text>
       <Text>{value}</Text>
       {!disabled && <Text color="gray">▌</Text>}
