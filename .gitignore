@@ -55,11 +55,3 @@ Thumbs.db
 *.local
 .turbo/
 .wrangler/
-openspec/
-notes
-
-# Local-only files (not published)
-CLAUDE.md
-AGENTS.md
-.claude/
-course.yaml

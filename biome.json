@@ -6,7 +6,8 @@
     "useIgnoreFile": true
   },
   "files": {
-    "ignoreUnknown": false
+    "ignoreUnknown": false,
+    "includes": ["src/**", "test/**", "evals/**", "*.json"]
   },
   "formatter": {
     "enabled": true,
