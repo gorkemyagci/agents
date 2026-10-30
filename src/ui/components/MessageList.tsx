@@ -1,4 +1,5 @@
 import { Box, Text } from "ink";
+import { stripControlChars } from "../sanitize.ts";
 
 export interface Message {
   role: "user" | "assistant";
@@ -19,7 +20,7 @@ export function MessageList({ messages }: MessageListProps) {
             {message.role === "user" ? "› You" : "› Assistant"}
           </Text>
           <Box marginLeft={2}>
-            <Text>{message.content}</Text>
+            <Text>{stripControlChars(message.content)}</Text>
           </Box>
         </Box>
       ))}

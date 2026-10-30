@@ -1,5 +1,6 @@
 import { Box, Text, useInput } from "ink";
 import { useState } from "react";
+import { stripControlChars } from "../sanitize.ts";
 
 interface ToolApprovalProps {
   toolName: string;
@@ -78,7 +79,7 @@ export function ToolApproval({ toolName, args, onResolve }: ToolApprovalProps) {
     { isActive: true },
   );
 
-  const argsSummary = getArgsSummary(args);
+  const argsSummary = stripControlChars(getArgsSummary(args));
   const { preview, extraLines } = formatArgs(args);
 
   return (
@@ -89,12 +90,12 @@ export function ToolApproval({ toolName, args, onResolve }: ToolApprovalProps) {
       <Box marginLeft={2} flexDirection="column">
         <Text>
           <Text color="cyan" bold>
-            {toolName}
+            {stripControlChars(toolName)}
           </Text>
           {argsSummary && <Text dimColor>({argsSummary})</Text>}
         </Text>
         <Box marginLeft={2} flexDirection="column">
-          <Text dimColor>{preview}</Text>
+          <Text dimColor>{stripControlChars(preview)}</Text>
           {extraLines > 0 && (
             <Text color="gray">... +{extraLines} more lines</Text>
           )}

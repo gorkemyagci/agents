@@ -1,5 +1,6 @@
 import { Box, Text } from "ink";
 import InkSpinner from "ink-spinner";
+import { stripControlChars } from "../sanitize.ts";
 
 export interface ToolCallProps {
   name: string;
@@ -13,7 +14,7 @@ export function ToolCall({ name, status, result }: ToolCallProps) {
       <Box>
         <Text color="yellow">⚡ </Text>
         <Text color="yellow" bold>
-          {name}
+          {stripControlChars(name)}
         </Text>
         {status === "pending" ? (
           <Text>
@@ -29,7 +30,7 @@ export function ToolCall({ name, status, result }: ToolCallProps) {
       {status === "complete" && result && (
         <Box marginLeft={2}>
           <Text dimColor>
-            → {result.slice(0, 100)}
+            → {stripControlChars(result.slice(0, 100))}
             {result.length > 100 ? "..." : ""}
           </Text>
         </Box>

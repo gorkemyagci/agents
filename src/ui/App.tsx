@@ -9,6 +9,7 @@ import { Spinner } from "./components/Spinner.tsx";
 import { TokenUsage } from "./components/TokenUsage.tsx";
 import { ToolApproval } from "./components/ToolApproval.tsx";
 import { ToolCall, type ToolCallProps } from "./components/ToolCall.tsx";
+import { stripControlChars } from "./sanitize.ts";
 
 interface ActiveToolCall extends ToolCallProps {
   id: string;
@@ -119,7 +120,7 @@ export function App() {
               › Assistant
             </Text>
             <Box marginLeft={2}>
-              <Text>{streamingText}</Text>
+              <Text>{stripControlChars(streamingText)}</Text>
               <Text color="gray">▌</Text>
             </Box>
           </Box>
