@@ -16,6 +16,8 @@ cp .env.example .env   # add OPENAI_API_KEY to run the app
 npm run dev
 ```
 
+Development is supported on macOS and Linux. Windows is not supported; use [WSL](https://learn.microsoft.com/windows/wsl/) (see [Supported platforms](README.md#supported-platforms)).
+
 ## Checks
 
 Run these before opening a pull request. CI runs the same checks.

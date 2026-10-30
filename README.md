@@ -23,6 +23,11 @@ Started from Scott Moss's *Build an AI Agent from Scratch* course; extended with
 - An [OpenAI API key](https://platform.openai.com/api-keys)
 - Optional: Python 3 (for `executeCode` with Python), a Laminar project API key (for tracing and evals)
 
+## Supported platforms
+
+- **macOS and Linux:** supported. CI runs on Ubuntu.
+- **Windows:** not supported or tested. `executeCode` starts `npx` and `python3` directly without a shell, which does not work for TypeScript on Windows, and `runCommand` runs commands through the Windows shell, so model-generated Unix commands may fail. Use [WSL](https://learn.microsoft.com/windows/wsl/) instead.
+
 ## Installation
 
 ```bash
