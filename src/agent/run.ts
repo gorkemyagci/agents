@@ -58,6 +58,9 @@ export async function runAgent(
       model: openai(MODEL_NAME),
       messages,
       tools: modelTools,
+      // Errors are handled from the stream below; the default handler would
+      // print to the console and corrupt the terminal UI
+      onError: () => {},
       experimental_telemetry: {
         isEnabled: true,
         tracer: getTracer(),
@@ -83,42 +86,31 @@ export async function runAgent(
 
     const toolCalls: ToolCallInfo[] = [];
     let currentText = "";
-    let streamError: Error | null = null;
 
-    try {
-      for await (const chunk of result.fullStream) {
-        if (chunk.type === "text-delta") {
-          currentText += chunk.text;
-          callbacks.onToken(chunk.text);
-        }
-        if (chunk.type === "tool-call") {
-          const input = "input" in chunk ? chunk.input : {};
-          toolCalls.push({
-            toolCallId: chunk.toolCallId,
-            toolName: chunk.toolName,
-            args: input as Record<string, unknown>,
-          });
-          callbacks.onToolCallStart(chunk.toolName, input);
-        }
+    for await (const chunk of result.fullStream) {
+      if (chunk.type === "text-delta") {
+        currentText += chunk.text;
+        callbacks.onToken(chunk.text);
       }
-    } catch (e) {
-      streamError = e as Error;
-      if (
-        !currentText &&
-        !streamError.message.includes("No output generated")
-      ) {
-        console.log(streamError);
-        throw streamError;
+      if (chunk.type === "tool-call") {
+        const input = "input" in chunk ? chunk.input : {};
+        toolCalls.push({
+          toolCallId: chunk.toolCallId,
+          toolName: chunk.toolName,
+          args: input as Record<string, unknown>,
+        });
+        callbacks.onToolCallStart(chunk.toolName, input);
+      }
+      // Surface the real error to the caller (the UI shows it); text already
+      // streamed stays on screen
+      if (chunk.type === "error") {
+        throw chunk.error instanceof Error
+          ? chunk.error
+          : new Error(String(chunk.error));
       }
     }
 
     fullResponse += currentText;
-
-    if (streamError && !currentText) {
-      fullResponse = "Sorry about that.";
-      callbacks.onToken(fullResponse);
-      break;
-    }
 
     const finishReason = await result.finishReason;
 

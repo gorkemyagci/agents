@@ -133,4 +133,26 @@ describe("runAgent", () => {
     // Only the first call is shown for approval; the rest are skipped
     expect(cb.onToolApproval).toHaveBeenCalledTimes(1);
   });
+
+  it("surfaces stream errors to the caller without writing to the console", async () => {
+    mocks.model = scriptedModel([
+      [
+        { type: "stream-start", warnings: [] },
+        { type: "text-start", id: "t1" },
+        { type: "text-delta", id: "t1", delta: "Partial" },
+        { type: "error", error: new Error("rate limited") },
+      ],
+    ]);
+    const cb = callbacks();
+    const log = vi.spyOn(console, "log").mockImplementation(() => {});
+    const error = vi.spyOn(console, "error").mockImplementation(() => {});
+
+    await expect(runAgent("hi", [], cb)).rejects.toThrow("rate limited");
+
+    expect(cb.onToken).toHaveBeenCalledWith("Partial");
+    expect(log).not.toHaveBeenCalled();
+    expect(error).not.toHaveBeenCalled();
+    log.mockRestore();
+    error.mockRestore();
+  });
 });
