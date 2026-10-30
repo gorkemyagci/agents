@@ -26,7 +26,7 @@ Started from Scott Moss's *Build an AI Agent from Scratch* course; extended with
 ## Installation
 
 ```bash
-git clone https://github.com/devgorkemyagci/agents.git
+git clone https://github.com/gorkemyagci/agents.git
 cd agents
 npm install
 cp .env.example .env   # then add your OpenAI API key

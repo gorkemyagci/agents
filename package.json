@@ -6,11 +6,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/devgorkemyagci/agents.git"
+    "url": "git+https://github.com/gorkemyagci/agents.git"
   },
-  "homepage": "https://github.com/devgorkemyagci/agents#readme",
+  "homepage": "https://github.com/gorkemyagci/agents#readme",
   "bugs": {
-    "url": "https://github.com/devgorkemyagci/agents/issues"
+    "url": "https://github.com/gorkemyagci/agents/issues"
   },
   "keywords": [
     "ai",

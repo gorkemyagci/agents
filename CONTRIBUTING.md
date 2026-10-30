@@ -9,7 +9,7 @@ By participating, you agree to follow the [Code of Conduct](CODE_OF_CONDUCT.md).
 You need Node.js 22.12 or later.
 
 ```bash
-git clone https://github.com/devgorkemyagci/agents.git
+git clone https://github.com/gorkemyagci/agents.git
 cd agents
 npm install
 cp .env.example .env   # add OPENAI_API_KEY to run the app

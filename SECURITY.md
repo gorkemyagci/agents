@@ -8,7 +8,7 @@ Only the latest release on the `main` branch receives security fixes.
 
 Please do **not** open a public issue for security problems.
 
-Report vulnerabilities privately through GitHub: go to the repository's **Security** tab and choose **Report a vulnerability** ([direct link](https://github.com/devgorkemyagci/agents/security/advisories/new)). You can expect an initial response within 7 days. Once a fix is available, the report will be published as a GitHub security advisory and credited to you unless you prefer otherwise.
+Report vulnerabilities privately through GitHub: go to the repository's **Security** tab and choose **Report a vulnerability** ([direct link](https://github.com/gorkemyagci/agents/security/advisories/new)). You can expect an initial response within 7 days. Once a fix is available, the report will be published as a GitHub security advisory and credited to you unless you prefer otherwise.
 
 ## Threat model
 
