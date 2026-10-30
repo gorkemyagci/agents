@@ -21,7 +21,7 @@ export const readFile = tool({
 
 export const writeFile = tool({
   description:
-    "Write content to a file a specified given path. Create the file if it doesn not exist  and will ovewrite it if it does.",
+    "Write content to a file at the given path. Creates the file if it does not exist and overwrites it if it does.",
   inputSchema: z.object({
     path: z.string().describe("The path to the file to write to"),
     content: z.string().describe("The content to write to the file"),
@@ -31,7 +31,7 @@ export const writeFile = tool({
       const dir = nodePath.dirname(path);
       await fs.mkdir(dir, { recursive: true });
       await fs.writeFile(path, content, "utf-8");
-      return `Succesfully wrote ${content.length} characters to ${path}. You should verify by listing files`;
+      return `Successfully wrote ${content.length} characters to ${path}. You should verify by listing files`;
     } catch (error) {
       return `Was not able to write to that file at that path, here is the node.js error: ${error}`;
     }
@@ -72,7 +72,7 @@ export const deleteFile = tool({
   execute: async ({ path }) => {
     try {
       await fs.unlink(path);
-      return `Succesfully deleted the file at ${path}`;
+      return `Successfully deleted the file at ${path}`;
     } catch (error) {
       return `Could not delete that file, here is the node.js error: ${error}`;
     }

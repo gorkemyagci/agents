@@ -3,7 +3,7 @@ import shell from "shelljs";
 import { z } from "zod";
 
 export const runCommand = tool({
-  description: `Execute a shell or terminal command and return is's output. Use this for system operations, running scripts or interaction with the OS`,
+  description: `Execute a shell or terminal command and return its output. Use this for system operations, running scripts or interacting with the OS`,
   inputSchema: z.object({
     command: z.string().describe("The shell command to execute"),
   }),
@@ -17,7 +17,7 @@ export const runCommand = tool({
       output += result.stderr;
     }
     if (result.code !== 0) {
-      return `Command failed (exit code ${result.code}: \n${output})`;
+      return `Command failed (exit code ${result.code}):\n${output}`;
     }
     return output || "Command completed successfully (no output)";
   },
