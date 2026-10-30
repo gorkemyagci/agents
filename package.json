@@ -55,7 +55,7 @@
   },
   "dependencies": {
     "@ai-sdk/openai": "^2.0.72",
-    "@lmnr-ai/lmnr": "^0.7.9",
+    "@lmnr-ai/lmnr": "^0.8.54",
     "ai": "^5.0.102",
     "ink": "^6.5.1",
     "ink-spinner": "^5.0.0",
