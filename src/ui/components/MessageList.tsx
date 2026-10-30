@@ -13,6 +13,7 @@ export function MessageList({ messages }: MessageListProps) {
   return (
     <Box flexDirection="column" gap={1}>
       {messages.map((message, index) => (
+        // biome-ignore lint/suspicious/noArrayIndexKey: messages are append-only, so indexes are stable
         <Box key={index} flexDirection="column">
           <Text color={message.role === "user" ? "blue" : "green"} bold>
             {message.role === "user" ? "› You" : "› Assistant"}
