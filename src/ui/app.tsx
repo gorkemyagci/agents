@@ -3,12 +3,12 @@ import { Box, Text, useApp } from "ink";
 import { useCallback, useState } from "react";
 import { runAgent } from "../agent/run.ts";
 import type { TokenUsageInfo, ToolApprovalRequest } from "../types.ts";
-import { Input } from "./components/Input.tsx";
-import { type Message, MessageList } from "./components/MessageList.tsx";
-import { Spinner } from "./components/Spinner.tsx";
-import { TokenUsage } from "./components/TokenUsage.tsx";
-import { ToolApproval } from "./components/ToolApproval.tsx";
-import { ToolCall, type ToolCallProps } from "./components/ToolCall.tsx";
+import { Input } from "./components/input.tsx";
+import { type Message, MessageList } from "./components/message-list.tsx";
+import { Spinner } from "./components/spinner.tsx";
+import { TokenUsage } from "./components/token-usage.tsx";
+import { ToolApproval } from "./components/tool-approval.tsx";
+import { ToolCall, type ToolCallProps } from "./components/tool-call.tsx";
 import { stripControlChars } from "./sanitize.ts";
 
 interface ActiveToolCall extends ToolCallProps {

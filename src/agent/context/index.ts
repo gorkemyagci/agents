@@ -9,10 +9,10 @@ export {
   DEFAULT_THRESHOLD,
   getModelLimits,
   isOverThreshold,
-} from "./modelLimits.ts";
+} from "./model-limits.ts";
 export {
   estimateMessagesTokens,
   estimateTokens,
   extractMessageText,
   type TokenUsage,
-} from "./tokenEstimator.ts";
+} from "./token-estimator.ts";

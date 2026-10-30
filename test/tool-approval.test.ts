@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getArgsSummary } from "../src/ui/components/ToolApproval.tsx";
+import { getArgsSummary } from "../src/ui/components/tool-approval.tsx";
 
 describe("getArgsSummary", () => {
   it("prefers a meaningful key over the first key", () => {

@@ -1,6 +1,6 @@
 import { openai } from "@ai-sdk/openai";
 import { generateText, type ModelMessage } from "ai";
-import { extractMessageText } from "./tokenEstimator.ts";
+import { extractMessageText } from "./token-estimator.ts";
 
 const SUMMARIZATION_PROMPT = `You are a conversation summarizer. Your task is to create a concise summary of the conversation so far that preserves:
 

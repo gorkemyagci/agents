@@ -68,10 +68,10 @@ This agent can modify files and run arbitrary commands and code on your machine 
 
 ```
 src/cli.ts                 entry point: Laminar setup, renders the UI
-└─ src/ui/App.tsx          Ink chat UI, approval prompt, token usage
+└─ src/ui/app.tsx          Ink chat UI, approval prompt, token usage
    └─ src/agent/run.ts     agent loop: stream → tool calls → approval → execute → repeat
       ├─ agent/tools/      tool definitions (file, shell, code execution, web search)
-      ├─ agent/executeTool.ts
+      ├─ agent/execute-tool.ts
       ├─ agent/context/    token estimation, model limits, conversation compaction
       └─ agent/system/     system prompt, history filtering
 evals/                     Laminar evals for tool selection and multi-turn runs

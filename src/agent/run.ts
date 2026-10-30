@@ -10,8 +10,8 @@ import {
   getModelLimits,
   isOverThreshold,
 } from "./context/index.ts";
-import { executeTool } from "./executeTool.ts";
-import { filterCompatibleMessages } from "./system/filterMessages.ts";
+import { executeTool } from "./execute-tool.ts";
+import { filterCompatibleMessages } from "./system/filter-messages.ts";
 import { SYSTEM_PROMPT } from "./system/prompt.ts";
 import { tools } from "./tools/index.ts";
 

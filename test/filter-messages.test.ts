@@ -1,6 +1,6 @@
 import type { ModelMessage } from "ai";
 import { describe, expect, it } from "vitest";
-import { filterCompatibleMessages } from "../src/agent/system/filterMessages.ts";
+import { filterCompatibleMessages } from "../src/agent/system/filter-messages.ts";
 
 describe("filterCompatibleMessages", () => {
   it("keeps user, system, tool and non-empty assistant messages", () => {
