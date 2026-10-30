@@ -1,5 +1,5 @@
 import { openai } from "@ai-sdk/openai";
-import { getTracer, Laminar } from "@lmnr-ai/lmnr";
+import { getTracer } from "@lmnr-ai/lmnr";
 import { type ModelMessage, streamText } from "ai";
 import type { AgentCallbacks, ToolCallInfo } from "../types.ts";
 import {
@@ -14,10 +14,6 @@ import { executeTool } from "./executeTool.ts";
 import { filterCompatibleMessages } from "./system/filterMessages.ts";
 import { SYSTEM_PROMPT } from "./system/prompt.ts";
 import { tools } from "./tools/index.ts";
-
-Laminar.initialize({
-  projectApiKey: process.env.LMNR_PROJECT_API_KEY,
-});
 
 const MODEL_NAME = "gpt-5-mini";
 

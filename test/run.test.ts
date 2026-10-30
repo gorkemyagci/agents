@@ -15,7 +15,6 @@ vi.mock("@ai-sdk/openai", () => ({
 }));
 
 vi.mock("@lmnr-ai/lmnr", () => ({
-  Laminar: { initialize: vi.fn() },
   getTracer: () => undefined,
 }));
 
