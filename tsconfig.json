@@ -35,5 +35,6 @@
 
     // Allow JS files to be imported from TS and vice versa
     "allowJs": true
-  }
+  },
+  "include": ["src", "test", "evals"]
 }
