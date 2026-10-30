@@ -16,7 +16,7 @@ import { SYSTEM_PROMPT } from "./system/prompt.ts";
 import { tools } from "./tools/index.ts";
 
 Laminar.initialize({
-  projectApiKey: process.env.LMNR_API_KEY,
+  projectApiKey: process.env.LMNR_PROJECT_API_KEY,
 });
 
 const MODEL_NAME = "gpt-5-mini";
