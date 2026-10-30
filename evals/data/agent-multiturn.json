@@ -8,7 +8,7 @@
           "parameters": { "path": "string" },
           "mockReturn": "{ \"name\": \"ai-agent-course\", \"version\": \"1.0.0\", \"description\": \"Build an AI agent from scratch\" }"
         },
-        "shell": {
+        "runCommand": {
           "description": "Execute a shell command and return its output",
           "parameters": { "command": "string" },
           "mockReturn": "command output here"
@@ -21,7 +21,7 @@
     "target": {
       "originalTask": "Read package.json and tell me the project name",
       "expectedToolOrder": ["readFile"],
-      "forbiddenTools": ["shell"],
+      "forbiddenTools": ["runCommand"],
       "mockToolResults": {
         "readFile": "{ \"name\": \"ai-agent-course\", \"version\": \"1.0.0\", \"description\": \"Build an AI agent from scratch\" }"
       },
@@ -85,7 +85,7 @@
           "parameters": { "directory": "string" },
           "mockReturn": "index.ts\nApp.tsx\ncomponents/"
         },
-        "shell": {
+        "runCommand": {
           "description": "Execute a shell command and return its output",
           "parameters": { "command": "string" },
           "mockReturn": "index.ts  App.tsx  components/"
@@ -98,7 +98,7 @@
     "target": {
       "originalTask": "What files are in the src directory?",
       "expectedToolOrder": ["listFiles"],
-      "forbiddenTools": ["shell"],
+      "forbiddenTools": ["runCommand"],
       "mockToolResults": {
         "listFiles": "index.ts\nApp.tsx\ncomponents/"
       },

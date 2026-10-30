@@ -1,13 +1,7 @@
 import { openai } from "@ai-sdk/openai";
-import {
-  generateText,
-  type ModelMessage,
-  stepCountIs,
-  type ToolSet,
-  tool,
-} from "ai";
-import { z } from "zod";
+import { generateText, type ModelMessage, stepCountIs, type ToolSet } from "ai";
 import { SYSTEM_PROMPT } from "../src/agent/system/prompt.ts";
+import { fileTools, shellTools } from "../src/agent/tools/index.ts";
 import type {
   EvalData,
   MultiTurnEvalData,
@@ -17,47 +11,15 @@ import type {
 import { buildMessages, buildMockedTools } from "./utils.ts";
 
 /**
- * Tool definitions for mocked single-turn evaluations.
- * These define the schema the LLM sees without real implementations.
+ * The agent's real tool definitions, without execute, so the LLM sees the
+ * exact descriptions and schemas the app ships but nothing runs.
  */
-const TOOL_DEFINITIONS: Record<
-  string,
-  { description: string; parameters: z.ZodObject<z.ZodRawShape> }
-> = {
-  // File tools
-  readFile: {
-    description: "Read the contents of a file at the specified path",
-    parameters: z.object({
-      path: z.string().describe("The path to the file to read"),
-    }),
-  },
-  writeFile: {
-    description: "Write content to a file at the specified path",
-    parameters: z.object({
-      path: z.string().describe("The path to the file to write"),
-      content: z.string().describe("The content to write to the file"),
-    }),
-  },
-  listFiles: {
-    description: "List all files in a directory",
-    parameters: z.object({
-      path: z.string().describe("The directory path to list files from"),
-    }),
-  },
-  deleteFile: {
-    description: "Delete a file at the specified path",
-    parameters: z.object({
-      path: z.string().describe("The path to the file to delete"),
-    }),
-  },
-  // Shell tools
-  runCommand: {
-    description: "Execute a shell command and return its output",
-    parameters: z.object({
-      command: z.string().describe("The shell command to execute"),
-    }),
-  },
-};
+const TOOL_DEFINITIONS: ToolSet = Object.fromEntries(
+  Object.entries({ ...fileTools, ...shellTools }).map(([name, t]) => [
+    name,
+    { ...t, execute: undefined },
+  ]),
+);
 
 /**
  * Single-turn executor with mocked tools.
@@ -68,15 +30,12 @@ export async function singleTurnWithMocks(
 ): Promise<SingleTurnResult> {
   const messages = buildMessages(data);
 
-  // Build mocked tools from definitions
+  // Expose only the tools this case asks for
   const tools: ToolSet = {};
   for (const toolName of data.tools) {
     const def = TOOL_DEFINITIONS[toolName];
     if (def) {
-      tools[toolName] = tool({
-        description: def.description,
-        inputSchema: def.parameters,
-      });
+      tools[toolName] = def;
     }
   }
 
