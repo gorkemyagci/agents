@@ -109,4 +109,28 @@ describe("runAgent", () => {
     expect(JSON.stringify(prompt)).toContain("SUMMARY");
     expect(JSON.stringify(prompt.at(-1))).toContain("next question");
   });
+
+  it("answers every tool call in the history when the user rejects one", async () => {
+    mocks.model = scriptedModel([
+      toolCallResponse([
+        { id: "c1", name: "listFiles", input: { directory: "." } },
+        { id: "c2", name: "listFiles", input: { directory: ".." } },
+      ]),
+    ]);
+    const cb = callbacks(false);
+
+    const history = await runAgent("list", [], cb);
+
+    const parts = history.flatMap<{ type: string; toolCallId?: string }>((m) =>
+      Array.isArray(m.content) ? m.content : [],
+    );
+    const callIds = parts
+      .filter((p) => p.type === "tool-call")
+      .map((p) => p.toolCallId);
+    const results = parts.filter((p) => p.type === "tool-result");
+    expect(results.map((r) => r.toolCallId)).toEqual(callIds);
+    expect(JSON.stringify(results)).toContain("User denied this tool call");
+    // Only the first call is shown for approval; the rest are skipped
+    expect(cb.onToolApproval).toHaveBeenCalledTimes(1);
+  });
 });

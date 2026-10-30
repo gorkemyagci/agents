@@ -135,10 +135,21 @@ export async function runAgent(
 
     let rejected = false;
 
-    for (const tc of toolCalls) {
+    for (const [index, tc] of toolCalls.entries()) {
       const approved = await callbacks.onToolApproval(tc.toolName, tc.args);
       if (!approved) {
         rejected = true;
+        // Every tool call needs a result, so tell the model this call and
+        // the ones after it in the batch were not run
+        messages.push({
+          role: "tool",
+          content: toolCalls.slice(index).map((skipped) => ({
+            type: "tool-result",
+            toolCallId: skipped.toolCallId,
+            toolName: skipped.toolName,
+            output: { type: "text", value: "User denied this tool call" },
+          })),
+        });
         break;
       }
       const result = await executeTool(tc.toolName, tc.args);
