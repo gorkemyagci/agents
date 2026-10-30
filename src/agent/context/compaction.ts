@@ -40,7 +40,7 @@ function messagesToText(messages: ModelMessage[]): string {
 export async function compactConversation(
   messages: ModelMessage[],
   model: string,
-): Promise<any> {
+): Promise<ModelMessage[]> {
   const conversationMessages = messages.filter((m) => m.role !== "system");
   if (conversationMessages.length === 0) {
     return [];
@@ -53,7 +53,7 @@ export async function compactConversation(
     prompt: SUMMARIZATION_PROMPT + conversationText,
   });
 
-  const compactedMessages: any = [
+  const compactedMessages: ModelMessage[] = [
     {
       role: "user",
       content: `[CONVERSATION SUMMARY]\n The following content is a summary of the conversation so far:\n${summary}. Please continue where we left off.`,

@@ -1,3 +1,4 @@
+import type { ToolCallOptions } from "ai";
 import { tools } from "./tools/index.ts";
 
 export type ToolName = keyof typeof tools;
@@ -18,8 +19,13 @@ export async function executeTool(
     return `Provider tool ${name} - executed by model provider`;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const result = await execute(args as any, {
+  // Tools have different input types; args were validated against the
+  // tool's schema by the SDK before reaching here
+  const run = execute as (
+    input: Record<string, unknown>,
+    options: ToolCallOptions,
+  ) => unknown;
+  const result = await run(args, {
     toolCallId: "",
     messages: [],
   });

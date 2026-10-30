@@ -91,7 +91,7 @@ export async function runAgent(
           toolCalls.push({
             toolCallId: chunk.toolCallId,
             toolName: chunk.toolName,
-            args: input as any,
+            args: input as Record<string, unknown>,
           });
           callbacks.onToolCallStart(chunk.toolName, input);
         }
