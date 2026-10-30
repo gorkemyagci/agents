@@ -22,7 +22,15 @@ function formatArgs(args: unknown): { preview: string; extraLines: number } {
   return { preview, extraLines };
 }
 
-function getArgsSummary(args: unknown): string {
+const MAX_SUMMARY_LENGTH = 50;
+
+function truncate(value: string): string {
+  return value.length > MAX_SUMMARY_LENGTH
+    ? `${value.slice(0, MAX_SUMMARY_LENGTH)}...`
+    : value;
+}
+
+export function getArgsSummary(args: unknown): string {
   if (typeof args !== "object" || args === null) {
     return String(args);
   }
@@ -39,23 +47,14 @@ function getArgsSummary(args: unknown): string {
   ];
   for (const key of meaningfulKeys) {
     if (key in obj && typeof obj[key] === "string") {
-      const value = obj[key] as string;
-      // Truncate long values
-      if (value.length > 50) {
-        return value.slice(0, 50) + "...";
-      }
-      return value;
+      return truncate(obj[key] as string);
     }
   }
 
   // Fall back to first string key
   const keys = Object.keys(obj);
   if (keys.length > 0 && typeof obj[keys[0]] === "string") {
-    const value = obj[keys[0]] as string;
-    if (value.length > 50) {
-      return value.slice(0, 50) + "...";
-    }
-    return value;
+    return truncate(obj[keys[0]] as string);
   }
 
   return "";
