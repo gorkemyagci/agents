@@ -108,17 +108,6 @@ export interface MultiTurnResult {
 }
 
 /**
- * Single entry in a single-turn evaluation dataset
- */
-export interface SingleTurnDatasetEntry {
-  data: EvalData;
-  target: EvalTarget;
-  metadata?: {
-    description?: string;
-  };
-}
-
-/**
  * Single entry in a multi-turn evaluation dataset
  */
 export interface MultiTurnDatasetEntry {

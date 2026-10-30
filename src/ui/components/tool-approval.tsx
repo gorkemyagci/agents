@@ -66,7 +66,7 @@ export function ToolApproval({ toolName, args, onResolve }: ToolApprovalProps) {
   const options = ["Yes", "No"];
 
   useInput(
-    (input, key) => {
+    (_input, key) => {
       if (key.upArrow || key.downArrow) {
         setSelectedIndex((prev) => (prev === 0 ? 1 : 0));
         return;

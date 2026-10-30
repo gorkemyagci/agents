@@ -1,7 +1,7 @@
 import type { ToolCallOptions } from "ai";
 import { tools } from "./tools/index.ts";
 
-export type ToolName = keyof typeof tools;
+type ToolName = keyof typeof tools;
 
 export async function executeTool(
   name: string,
