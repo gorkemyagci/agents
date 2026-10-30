@@ -35,9 +35,12 @@ export const buildMockedTools = (
 export const buildMessages = (
   data: EvalData | { prompt?: string; systemPrompt?: string },
 ): ModelMessage[] => {
+  if (data.prompt === undefined) {
+    throw new Error("Eval case is missing a `prompt`");
+  }
   const systemPrompt = data.systemPrompt ?? SYSTEM_PROMPT;
   return [
     { role: "system", content: systemPrompt },
-    { role: "user", content: data.prompt! },
+    { role: "user", content: data.prompt },
   ];
 };

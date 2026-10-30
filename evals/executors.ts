@@ -71,10 +71,17 @@ export async function multiTurnWithMocks(
   data: MultiTurnEvalData,
 ): Promise<MultiTurnResult> {
   const tools = buildMockedTools(data.mockTools);
-  const messages: ModelMessage[] = data.messages ?? [
-    { role: "system", content: SYSTEM_PROMPT },
-    { role: "user", content: data.prompt! },
-  ];
+  let messages: ModelMessage[];
+  if (data.messages) {
+    messages = data.messages;
+  } else if (data.prompt !== undefined) {
+    messages = [
+      { role: "system", content: SYSTEM_PROMPT },
+      { role: "user", content: data.prompt },
+    ];
+  } else {
+    throw new Error("Multi-turn eval case needs either `messages` or `prompt`");
+  }
 
   const result = await generateText({
     model: openai(data.config?.model ?? "gpt-5-mini"),
