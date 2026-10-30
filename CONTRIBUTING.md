@@ -6,7 +6,7 @@ By participating, you agree to follow the [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## Setup
 
-You need Node.js 22.12 or later for development (the test runner requires it; the app itself runs on Node.js 20.10+).
+You need Node.js 22.12 or later.
 
 ```bash
 git clone https://github.com/devgorkemyagci/agents.git

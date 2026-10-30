@@ -19,7 +19,7 @@ Started from Scott Moss's *Build an AI Agent from Scratch* course; extended with
 
 ## Requirements
 
-- Node.js 20.10 or later (22.12 or later to run the test suite)
+- Node.js 22.12 or later
 - An [OpenAI API key](https://platform.openai.com/api-keys)
 - Optional: Python 3 (for `executeCode` with Python), a Laminar project API key (for tracing and evals)
 

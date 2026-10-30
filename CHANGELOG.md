@@ -20,6 +20,7 @@ First public release.
 ### Changed
 
 - The package and command are named `agents`.
+- Requires Node.js 22.12 or later.
 - `executeCode` runs code from a private temporary directory and starts the interpreter without a shell.
 - The Laminar API key is read from `LMNR_PROJECT_API_KEY` everywhere.
 - Single-turn evals use the agent's real tool definitions, and the multi-turn dataset uses the real `runCommand` tool name. **Eval results from before this change are not comparable with current results.**

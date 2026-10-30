@@ -22,7 +22,7 @@
     "tool-calling"
   ],
   "engines": {
-    "node": ">=20.10"
+    "node": ">=22.12"
   },
   "type": "module",
   "bin": {
