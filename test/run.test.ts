@@ -66,7 +66,14 @@ describe("runAgent", () => {
     expect(cb.onToolApproval).toHaveBeenCalledWith("readFile", {
       path: tmpFile,
     });
-    expect(cb.onToolCallEnd).toHaveBeenCalledWith("readFile", "file body");
+    expect(cb.onToolCallStart).toHaveBeenCalledWith("c1", "readFile", {
+      path: tmpFile,
+    });
+    expect(cb.onToolCallEnd).toHaveBeenCalledWith(
+      "c1",
+      "readFile",
+      "file body",
+    );
     expect(cb.onComplete).toHaveBeenCalledWith("Done");
     expect(model.calls).toHaveLength(2);
     expect(history.map((m) => m.role)).toEqual([

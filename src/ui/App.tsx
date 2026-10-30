@@ -47,20 +47,20 @@ export function App() {
           onToken: (token) => {
             setStreamingText((prev) => prev + token);
           },
-          onToolCallStart: (name) => {
+          onToolCallStart: (toolCallId, name) => {
             setActiveToolCalls((prev) => [
               ...prev,
               {
-                id: `${name}-${Date.now()}`,
+                id: toolCallId,
                 name,
                 status: "pending",
               },
             ]);
           },
-          onToolCallEnd: (name, result) => {
+          onToolCallEnd: (toolCallId, _name, result) => {
             setActiveToolCalls((prev) =>
               prev.map((tc) =>
-                tc.name === name && tc.status === "pending"
+                tc.id === toolCallId
                   ? { ...tc, status: "complete", result }
                   : tc,
               ),

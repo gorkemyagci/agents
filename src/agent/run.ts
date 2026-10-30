@@ -99,7 +99,7 @@ export async function runAgent(
           toolName: chunk.toolName,
           args: input as Record<string, unknown>,
         });
-        callbacks.onToolCallStart(chunk.toolName, input);
+        callbacks.onToolCallStart(chunk.toolCallId, chunk.toolName, input);
       }
       // Surface the real error to the caller (the UI shows it); text already
       // streamed stays on screen
@@ -145,7 +145,7 @@ export async function runAgent(
         break;
       }
       const result = await executeTool(tc.toolName, tc.args);
-      callbacks.onToolCallEnd(tc.toolName, result);
+      callbacks.onToolCallEnd(tc.toolCallId, tc.toolName, result);
       messages.push({
         role: "tool",
         content: [
