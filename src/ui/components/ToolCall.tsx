@@ -1,10 +1,8 @@
 import { Box, Text } from "ink";
 import InkSpinner from "ink-spinner";
-import React from "react";
 
 export interface ToolCallProps {
   name: string;
-  args?: unknown;
   status: "pending" | "complete";
   result?: string;
 }

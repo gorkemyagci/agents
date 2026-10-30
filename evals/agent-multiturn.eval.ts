@@ -1,13 +1,8 @@
 import { evaluate } from "@lmnr-ai/lmnr";
 import dataset from "./data/agent-multiturn.json" with { type: "json" };
-import { llmJudge, toolOrderCorrect, toolsAvoided } from "./evaluators";
+import { llmJudge } from "./evaluators";
 import { mutliTurnWithMocks } from "./executors";
-import type {
-  MultiTurnDatasetEntry,
-  MultiTurnEvalData,
-  MultiTurnResult,
-  MultiTurnTarget,
-} from "./types";
+import type { MultiTurnEvalData } from "./types";
 
 const executor = async (data: MultiTurnEvalData) => {
   return mutliTurnWithMocks(data);

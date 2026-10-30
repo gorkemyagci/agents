@@ -1,6 +1,6 @@
 import type { ModelMessage } from "ai";
 import { Box, Text, useApp } from "ink";
-import React, { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import { runAgent } from "../agent/run.ts";
 import type { TokenUsageInfo, ToolApprovalRequest } from "../types.ts";
 import { Input } from "./components/Input.tsx";
@@ -47,13 +47,12 @@ export function App() {
           onToken: (token) => {
             setStreamingText((prev) => prev + token);
           },
-          onToolCallStart: (name, args) => {
+          onToolCallStart: (name) => {
             setActiveToolCalls((prev) => [
               ...prev,
               {
                 id: `${name}-${Date.now()}`,
                 name,
-                args,
                 status: "pending",
               },
             ]);
@@ -132,7 +131,6 @@ export function App() {
               <ToolCall
                 key={tc.id}
                 name={tc.name}
-                args={tc.args}
                 status={tc.status}
                 result={tc.result}
               />

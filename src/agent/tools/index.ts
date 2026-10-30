@@ -14,12 +14,6 @@ export const tools = {
   webSearch,
 };
 
-export { executeCode } from "./code-execution.ts";
-// Export individual tools for selective use in evals
-export { deleteFile, listFiles, readFile, writeFile } from "./file.ts";
-export { runCommand } from "./shell.ts";
-export { webSearch } from "./web-search.ts";
-
 // Tool sets for evals
 export const fileTools = {
   readFile,
