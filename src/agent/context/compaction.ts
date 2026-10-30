@@ -39,7 +39,7 @@ function messagesToText(messages: ModelMessage[]): string {
  */
 export async function compactConversation(
   messages: ModelMessage[],
-  model: string = "gpt-5-mini",
+  model: string,
 ): Promise<any> {
   const conversationMessages = messages.filter((m) => m.role !== "system");
   if (conversationMessages.length === 0) {
