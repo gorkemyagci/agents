@@ -1,8 +1,8 @@
+import { spawnSync } from "node:child_process";
+import fs from "node:fs/promises";
+import os from "node:os";
+import path from "node:path";
 import { tool } from "ai";
-import fs from "fs/promises";
-import os from "os";
-import path from "path";
-import shell from "shelljs";
 import { z } from "zod";
 
 /**
@@ -34,23 +34,34 @@ export const executeCode = tool({
       typescript: ".ts",
     };
 
-    const commands: Record<string, (file: string) => string> = {
-      javascript: (file) => `node ${file}`,
-      python: (file) => `python3 ${file}`,
-      typescript: (file) => `npx tsx ${file}`,
+    // Program and arguments, run without a shell
+    const commands: Record<string, (file: string) => string[]> = {
+      javascript: (file) => ["node", file],
+      python: (file) => ["python3", file],
+      typescript: (file) => ["npx", "tsx", file],
     };
 
     const ext = extensions[language];
     const getCommand = commands[language];
-    const tmpFile = path.join(os.tmpdir(), `code-exec-${Date.now()}${ext}`);
+    // Private (0700) directory with a random name, so the file can't be
+    // pre-created or swapped by another user
+    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "code-exec-"));
+    const tmpFile = path.join(tmpDir, `main${ext}`);
 
     try {
       // Write code to temp file
-      await fs.writeFile(tmpFile, code, "utf-8");
+      await fs.writeFile(tmpFile, code, {
+        encoding: "utf-8",
+        flag: "wx",
+        mode: 0o600,
+      });
 
       // Execute the code
-      const command = getCommand(tmpFile);
-      const result = shell.exec(command, { silent: true });
+      const [program, ...args] = getCommand(tmpFile);
+      const result = spawnSync(program, args, { encoding: "utf-8" });
+      if (result.error) {
+        throw result.error;
+      }
 
       let output = "";
       if (result.stdout) {
@@ -60,8 +71,8 @@ export const executeCode = tool({
         output += result.stderr;
       }
 
-      if (result.code !== 0) {
-        return `Execution failed (exit code ${result.code}):\n${output}`;
+      if (result.status !== 0) {
+        return `Execution failed (exit code ${result.status}):\n${output}`;
       }
 
       return output || "Code executed successfully (no output)";
@@ -69,12 +80,8 @@ export const executeCode = tool({
       const err = error as Error;
       return `Error executing code: ${err.message}`;
     } finally {
-      // Clean up temp file
-      try {
-        await fs.unlink(tmpFile);
-      } catch {
-        // Ignore cleanup errors
-      }
+      // Clean up temp directory
+      await fs.rm(tmpDir, { recursive: true, force: true });
     }
   },
 });
