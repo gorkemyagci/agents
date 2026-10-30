@@ -38,6 +38,7 @@
     "typecheck": "tsc --noEmit",
     "lint": "biome check .",
     "format": "biome check --write .",
+    "test": "vitest run",
     "eval": "npx lmnr eval",
     "eval:file-tools": "npx lmnr eval evals/file-tools.eval.ts",
     "eval:shell-tools": "npx lmnr eval evals/shell-tools.eval.ts",
@@ -49,7 +50,8 @@
     "@types/react": "^19.2.7",
     "@types/shelljs": "^0.8.17",
     "tsx": "^4.21.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.7"
   },
   "dependencies": {
     "@ai-sdk/openai": "^2.0.72",
